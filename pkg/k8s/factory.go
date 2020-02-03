@@ -12,10 +12,10 @@ import (
 	"time"
 )
 
-var w watcher.Watcher
+var w *watcher.Watcher
 
 func GetWatcher() *watcher.Watcher {
-	return &w
+	return w
 }
 func Start() {
 	stop := make(chan struct{})
@@ -23,7 +23,7 @@ func Start() {
 	var KubeClient = utils.NewK8sClient().GetKubeClient()
 	factory := informers.NewSharedInformerFactory(KubeClient, time.Hour*2)
 
-	w = watcher.Watcher{
+	w = &watcher.Watcher{
 		Factory:      factory,
 		DaemonSets:   factory.Apps().V1().DaemonSets(),
 		Deployments:  factory.Apps().V1().Deployments(),
