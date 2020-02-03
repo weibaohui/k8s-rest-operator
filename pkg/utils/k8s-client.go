@@ -59,11 +59,9 @@ func (h *helper) IsServiceExists(ns, svcName string) bool {
 func getClient() kubernetes.Interface {
 	var config *rest.Config
 	var err error
-	if home := homeDir(); home != "" {
-		kubeConfig := filepath.Join(home, ".kube", "config")
-		if exists, _ := filekit.PathExists(kubeConfig); exists {
-			config, err = clientcmd.BuildConfigFromFlags("", kubeConfig)
-		}
+	kubeConfig := filepath.Join(homeDir(), ".kube", "config")
+	if exists, _ := filekit.PathExists(kubeConfig); exists {
+		config, err = clientcmd.BuildConfigFromFlags("", kubeConfig)
 	} else {
 		config, err = rest.InClusterConfig()
 	}
@@ -71,9 +69,9 @@ func getClient() kubernetes.Interface {
 	if err != nil {
 		panic(err.Error())
 	}
-	cli, e := kubernetes.NewForConfig(config)
-	if e != nil {
-		panic(e.Error())
+	cli, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
 	}
 	return cli
 
