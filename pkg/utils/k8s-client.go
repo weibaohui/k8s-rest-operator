@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/weibaohui/go-kit/filekit"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -60,7 +61,9 @@ func getClient() kubernetes.Interface {
 	var err error
 	if home := homeDir(); home != "" {
 		kubeConfig := filepath.Join(home, ".kube", "config")
-		config, err = clientcmd.BuildConfigFromFlags("", kubeConfig)
+		if exists, _ := filekit.PathExists(kubeConfig); exists {
+			config, err = clientcmd.BuildConfigFromFlags("", kubeConfig)
+		}
 	} else {
 		config, err = rest.InClusterConfig()
 	}
