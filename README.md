@@ -1,0 +1,1 @@
+[![Docker Repository on Quay](https://quay.io/repository/weibaohui/k8s-rest-operator/status "Docker Repository on Quay")](https://quay.io/repository/weibaohui/k8s-rest-operator)
