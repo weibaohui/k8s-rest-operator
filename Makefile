@@ -5,4 +5,4 @@ build:
 push:
 	docker push quay.io/cmit/k8s-rest-operator
 deploy:
-	kubectl apply -f deployment.yaml
+	kubectl apply -f deploy/deployment.yaml
