@@ -9,5 +9,4 @@ func main() {
 	go k8s.Start()
 	go webservice.Start()
 	select {}
-
 }
