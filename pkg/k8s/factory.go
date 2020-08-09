@@ -1,15 +1,16 @@
 package k8s
 
 import (
+	"time"
+
+	"k8s.io/client-go/informers"
+
 	"cmit.com/paas/k8s/rest-operator/pkg/k8s/handler"
 	"cmit.com/paas/k8s/rest-operator/pkg/k8s/starter"
 	"cmit.com/paas/k8s/rest-operator/pkg/k8s/starter/deployment"
 	"cmit.com/paas/k8s/rest-operator/pkg/k8s/starter/pod"
 	"cmit.com/paas/k8s/rest-operator/pkg/utils"
 	"cmit.com/paas/k8s/rest-operator/pkg/watcher"
-
-	"k8s.io/client-go/informers"
-	"time"
 )
 
 var w *watcher.Watcher

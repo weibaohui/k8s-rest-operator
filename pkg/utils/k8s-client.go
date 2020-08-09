@@ -1,6 +1,11 @@
 package utils
 
 import (
+	"context"
+	"os"
+	"path/filepath"
+	"sync"
+
 	"github.com/weibaohui/go-kit/filekit"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -8,9 +13,6 @@ import (
 	typeV1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	"os"
-	"path/filepath"
-	"sync"
 )
 
 var cli kubernetes.Interface
@@ -41,15 +43,15 @@ func (h *helper) Services(ns string) typeV1.ServiceInterface {
 	return h.cli.CoreV1().Services(ns)
 }
 
-func (h *helper) GetPod(ns, podName string) (*coreV1.Pod, error) {
-	return h.Pods(ns).Get(podName, metaV1.GetOptions{})
+func (h *helper) GetPod(ctx context.Context, ns, podName string) (*coreV1.Pod, error) {
+	return h.Pods(ns).Get(ctx, podName, metaV1.GetOptions{})
 }
 
-func (h *helper) GetService(ns, svcName string) (*coreV1.Service, error) {
-	return h.Services(ns).Get(svcName, metaV1.GetOptions{})
+func (h *helper) GetService(ctx context.Context, ns, svcName string) (*coreV1.Service, error) {
+	return h.Services(ns).Get(ctx, svcName, metaV1.GetOptions{})
 }
-func (h *helper) IsServiceExists(ns, svcName string) bool {
-	_, e := h.Services(ns).Get(svcName, metaV1.GetOptions{})
+func (h *helper) IsServiceExists(ctx context.Context, ns, svcName string) bool {
+	_, e := h.Services(ns).Get(ctx, svcName, metaV1.GetOptions{})
 	if e == nil {
 		return true
 	}

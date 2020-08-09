@@ -1,10 +1,12 @@
 package webservice
 
 import (
+	"context"
 	"log"
 	"net/http"
 
 	"github.com/emicklei/go-restful"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"cmit.com/paas/k8s/rest-operator/pkg/k8s"
 	"cmit.com/paas/k8s/rest-operator/pkg/utils"
@@ -31,7 +33,7 @@ func ports(request *restful.Request, response *restful.Response) {
 	labels["x"] = "nn"
 	deployment.Labels = labels
 
-	update, err := utils.NewK8sClient().GetKubeClient().AppsV1().Deployments("docker").Update(deployment)
+	update, err := utils.NewK8sClient().GetKubeClient().AppsV1().Deployments("docker").Update(context.TODO(), deployment, metaV1.UpdateOptions{})
 	if err != nil {
 		response.WriteAsJson(err)
 		return
