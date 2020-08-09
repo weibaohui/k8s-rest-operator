@@ -1,11 +1,13 @@
 package webservice
 
 import (
-	"cmit.com/paas/k8s/rest-operator/pkg/k8s"
-	"cmit.com/paas/k8s/rest-operator/pkg/utils"
-	"github.com/emicklei/go-restful"
 	"log"
 	"net/http"
+
+	"github.com/emicklei/go-restful"
+
+	"cmit.com/paas/k8s/rest-operator/pkg/k8s"
+	"cmit.com/paas/k8s/rest-operator/pkg/utils"
 )
 
 func Start() {
@@ -35,4 +37,5 @@ func ports(request *restful.Request, response *restful.Response) {
 		return
 	}
 	response.WriteEntity(update)
+
 }
